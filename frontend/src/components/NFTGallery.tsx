@@ -10,9 +10,9 @@ const ESTIMATED_GENERATION_TIME = 40000; // 40 seconds in milliseconds
 const getEstimatedTimeRemaining = (timestamp: number): string => {
   const elapsed = Date.now() - timestamp;
   const remainingMs = Math.max(0, ESTIMATED_GENERATION_TIME - elapsed);
-  
+
   if (remainingMs === 0) return "Finalizing...";
-  
+
   const remainingSecs = Math.ceil(remainingMs / 1000);
   return `${remainingSecs}s`;
 };
@@ -21,18 +21,21 @@ const getEstimatedTimeRemaining = (timestamp: number): string => {
 const ProgressBar: React.FC<{ mint: any }> = ({ mint }) => {
   const [progress, setProgress] = useState(mint.startProgress || 0);
   const [isComplete, setIsComplete] = useState(false);
-  
+
   useEffect(() => {
     // Calculate elapsed time since the mint was triggered
     const elapsed = Date.now() - mint.timestamp;
-    
+
     // Calculate initial progress based on elapsed time (0-95%)
     // We cap at 95% to avoid showing 100% before it's actually done
-    const initialProgress = Math.min(95, (elapsed / ESTIMATED_GENERATION_TIME) * 100);
-    
+    const initialProgress = Math.min(
+      95,
+      (elapsed / ESTIMATED_GENERATION_TIME) * 100
+    );
+
     // Set the initial progress
     setProgress(initialProgress);
-    
+
     // If we're already at 95%, mark as near complete
     if (initialProgress >= 95) {
       setIsComplete(true);
@@ -42,23 +45,26 @@ const ProgressBar: React.FC<{ mint: any }> = ({ mint }) => {
         setProgress(() => {
           // Calculate new progress based on current time
           const newElapsed = Date.now() - mint.timestamp;
-          const newProgress = Math.min(95, (newElapsed / ESTIMATED_GENERATION_TIME) * 100);
-          
+          const newProgress = Math.min(
+            95,
+            (newElapsed / ESTIMATED_GENERATION_TIME) * 100
+          );
+
           // If we've reached 95%, clear the interval
           if (newProgress >= 95) {
             clearInterval(interval);
             setIsComplete(true);
             return 95;
           }
-          
+
           return newProgress;
         });
       }, 1000);
-      
+
       return () => clearInterval(interval);
     }
   }, [mint.timestamp]);
-  
+
   return (
     <>
       <div className="flex justify-between items-center">
@@ -77,7 +83,9 @@ const ProgressBar: React.FC<{ mint: any }> = ({ mint }) => {
       </div>
       <div className="w-full h-1 bg-dark-900 mt-1">
         <div
-          className={`h-full ${isComplete ? "bg-accent" : "bg-cyber-gradient"} ${isComplete ? "animate-pulse" : "transition-all duration-1000"}`}
+          className={`h-full ${
+            isComplete ? "bg-accent" : "bg-cyber-gradient"
+          } ${isComplete ? "animate-pulse" : "transition-all duration-1000"}`}
           style={{
             width: `${progress}%`,
           }}
@@ -179,7 +187,6 @@ const NFTGallery: React.FC = () => {
   const hasPendingOrOwned = pendingMints.length > 0 || ownedNfts.length > 0;
 
   // Simulating cyberpunk data metrics
-  const securityLevel = Math.floor(Math.random() * 3) + 8; // 8, 9, or 10
   const networkLatency = Math.floor(Math.random() * 30) + 15; // Between 15-45ms
   const encryptedNfts = ownedNfts.length + pendingMints.length;
 
@@ -202,13 +209,13 @@ const NFTGallery: React.FC = () => {
       {/* Stats bar */}
       <div className="flex items-center justify-between mb-4 mt-8 font-mono text-xs border border-dark-700 bg-dark-900 p-2">
         <div className="text-primary">
-          SEC::<span className="text-accent">{securityLevel}/10</span>
+          NFTS::<span className="text-accent">{encryptedNfts}</span>
         </div>
         <div className="text-primary">
           LATENCY::<span className="text-warning">{networkLatency}ms</span>
         </div>
         <div className="text-primary">
-          ENCRYPTED::<span className="text-secondary">{encryptedNfts}</span>
+          AVS::<span className="text-secondary">ONLINE</span>
         </div>
         <div className="text-primary">
           IPFS::<span className="text-accent">ONLINE</span>
@@ -405,7 +412,7 @@ const NFTGallery: React.FC = () => {
                                }`}
                     onClick={(e) => {
                       // If clicking on IPFS_DATA button, don't navigate
-                      if ((e.target as HTMLElement).closest('button')) {
+                      if ((e.target as HTMLElement).closest("button")) {
                         return;
                       }
                       // Navigate to NFT detail page
@@ -510,7 +517,6 @@ const NFTGallery: React.FC = () => {
                       {selectedNft === nft.tokenId && nft.metadata && (
                         <div className="mt-2 border-t border-dark-700 pt-2 font-mono text-xs">
                           <div className="console-output text-[10px] max-h-24 overflow-y-auto">
-
                             {nft.metadata.attributes ? (
                               <>
                                 <div className="text-primary/60">

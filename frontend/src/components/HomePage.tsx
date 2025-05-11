@@ -1,6 +1,6 @@
-import React from 'react';
-import MintForm from './MintForm';
-import NFTGallery from './NFTGallery';
+import React from "react";
+import MintForm from "./MintForm";
+import NFTGallery from "./NFTGallery";
 
 const HomePage: React.FC = () => {
   return (
@@ -23,20 +23,20 @@ const HomePage: React.FC = () => {
           <div className="text-center mb-12 relative">
             <div className="inline-block relative">
               <h1 className="text-4xl font-glitch mb-4 relative z-10 tracking-wider">
-                <span className="crt-flicker text-primary">CRYPTO</span>
-                <span className="text-accent">WAVE</span>
-                <span className="text-secondary">NFT</span>
+                <span className="crt-flicker text-primary">DYNAMIC</span>
+                <span className="text-accent">AVS</span>
+                <span className="text-secondary">NFTS</span>
               </h1>
-              <div className="absolute -bottom-2 left-0 w-full h-px bg-cyber-gradient"></div>
+              <div className="absolute left-0 w-full h-px bg-cyber-gradient"></div>
             </div>
 
-            <p className="text-primary/70 max-w-2xl mx-auto font-mono text-sm">
+            <p className="pt-4 text-primary/70 max-w-2xl mx-auto font-mono text-sm">
               GENERATE SECURE || AUTONOMOUS || DECENTRALIZED ASSETS
               <br />
-              <span className="text-xs text-primary/50">
+              {/* <span className="text-xs text-primary/50">
                 ALL TRANSACTIONS ENCRYPTED • IMMUTABLE STORAGE • HIGH ENTROPY
                 RANDOMIZATION
-              </span>
+              </span> */}
             </p>
 
             {/* Technical decoration */}
@@ -70,7 +70,7 @@ const HomePage: React.FC = () => {
                 Math.floor(Math.random() * 16).toString(16)
               ).join("")}
             </div>
-            <div className="text-accent">V1.0.2</div>
+            <div className="text-accent">V1.0.0</div>
           </div>
         </div>
 
