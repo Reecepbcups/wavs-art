@@ -47,12 +47,20 @@ MOUNTS["${ROOT}/repositories/CodeFormer/weights/facelib"]="/data/.cache"
 for to_path in "${!MOUNTS[@]}"; do
   set -Eeuo pipefail
   from_path="${MOUNTS[${to_path}]}"
-  rm -rf "${to_path}"
-  if [ ! -f "$from_path" ]; then
+  
+  # Ensure source directory exists
+  if [ ! -e "$from_path" ]; then
     mkdir -vp "$from_path"
   fi
+  
+  # Ensure target parent directory exists but remove target if it exists
   mkdir -vp "$(dirname "${to_path}")"
-  ln -sT "${from_path}" "${to_path}"
+  if [ -e "${to_path}" ] || [ -L "${to_path}" ]; then
+    rm -rf "${to_path}"
+  fi
+  
+  # Create the symbolic link
+  ln -sf "${from_path}" "${to_path}"
   echo Mounted $(basename "${from_path}")
 done
 

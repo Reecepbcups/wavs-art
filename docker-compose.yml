@@ -79,6 +79,8 @@ services:
             - driver: nvidia
               count: 1
               capabilities: [gpu]
+        limits:
+          memory: 6G
     # command: serve
     # Auto-pull models on startup
     entrypoint: ["/bin/bash", "/entrypoint.sh"]
@@ -102,7 +104,7 @@ services:
       - ./.docker/data_stable-diffusion:/data
     environment:
       # CPU (slow)
-      # - CLI_ARGS=--api --no-half --skip-torch-cuda-test --skip-install
+      # - CLI_ARGS=--api --skip-install --no-half --precision full --use-cpu all --disable-opt-split-attention --allow-code
       # GPU
       - CLI_ARGS=--api --skip-install --xformers --no-half-vae --allow-code
       - NVIDIA_VISIBLE_DEVICES=all # Expose all GPUs to the container [4]

@@ -103,21 +103,21 @@ impl Guest for Component {
             config_var("nft_contract").ok_or_else(|| "Failed to get nft contract")?;
         eprintln!("NFT contract: {}", nft_contract);
 
-        // Query NFT balance and add a "wealth" attribute if balance > 1 ETH
-        let owns_nft = query_nft_ownership(sender, Address::from_str(&nft_contract).unwrap())?;
-        if owns_nft {
-            eprintln!("NFT owner: {}", sender);
-            attributes.push(Attribute {
-                trait_type: "Wealth Level".to_string(),
-                value: "Rich".to_string(),
-            });
-        } else {
-            eprintln!("Sender {} does not own NFT", sender);
-            attributes.push(Attribute {
-                trait_type: "Wealth Level".to_string(),
-                value: "Pre-Rich".to_string(),
-            });
-        }
+        // // Query NFT balance and add a "wealth" attribute if balance > 1 ETH
+        // let owns_nft = query_nft_ownership(sender, Address::from_str(&nft_contract).unwrap())?;
+        // if owns_nft {
+        //     eprintln!("NFT owner: {}", sender);
+        //     attributes.push(Attribute {
+        //         trait_type: "Wealth Level".to_string(),
+        //         value: "Rich".to_string(),
+        //     });
+        // } else {
+        //     eprintln!("Sender {} does not own NFT", sender);
+        //     attributes.push(Attribute {
+        //         trait_type: "Wealth Level".to_string(),
+        //         value: "Pre-Rich".to_string(),
+        //     });
+        // }
 
         let title = llm_client.chat_completion_text(vec![Message {
             role: "system".to_string(),
